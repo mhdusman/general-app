@@ -20,3 +20,15 @@ class ModelTests(TestCase):
         email = 'usman@GMAIL.coM'
         user = get_user_model().objects.create_user(email, 'dsf333')
         self.assertEqual(user.email, email.lower())
+
+    def test_user_with_invalid_email(self):
+        """Test create new user with no email raise error."""
+        with self.assertRaises(ValueError):
+            get_user_model().objects.create_user(None, 'fdsfds')
+
+    def test_create_new_superuser(self):
+        """Test create new superuser"""
+        user = get_user_model().objects.create_superuser(
+            'usman@gmail.com', '123456')
+        self.assertTrue(user.is_superuser)
+        self.assertTrue(user.is_staff)
